@@ -1,0 +1,5 @@
+# Haxe OSC Unit Tests Build Configuration
+-cp src
+-main TestOSC
+-hl bin/test_osc.hl
+--debug

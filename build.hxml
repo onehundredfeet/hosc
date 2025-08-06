@@ -1,0 +1,8 @@
+# Haxe OSC Server Build Configuration
+-cp src
+-main Main
+-hl bin/osc_server.hl
+
+# Libraries
+# Using HashLink for native performance and UDP socket support
+--debug

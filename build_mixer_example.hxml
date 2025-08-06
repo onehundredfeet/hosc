@@ -1,0 +1,5 @@
+# Audio Mixer Example Build Configuration
+-cp src
+-main AudioMixerExample
+-hl bin/audio_mixer.hl
+--debug

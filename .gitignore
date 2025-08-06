@@ -1,0 +1,58 @@
+# Haxe OSC Project - Git Ignore Rules
+
+# Build outputs
+bin/
+*.hl
+*.cpp/
+*.java/
+*.cs/
+
+# Haxe build artifacts
+*.n
+*.swf
+*.swc
+*.abc
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-*
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.cache
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Node.js (for test clients)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python (for test clients)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+
+# HashLink runtime files
+*.hdll
+*.so
+*.dll
+*.dylib
