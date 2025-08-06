@@ -32,7 +32,8 @@ A complete Haxe implementation of the Open Sound Control (OSC) protocol for real
 ### Core Classes
 
 - **`OSCMessage`**: Represents an OSC message with address and typed arguments
-- **`OSCServer`**: UDP server that receives and processes OSC messages  
+- **`OSCServer`**: Blocking UDP server that processes OSC messages in main thread
+- **`OSCServerAsync`**: Non-blocking UDP server with threaded message processing
 - **`OSCParser`**: Parses binary OSC data into message objects
 - **`OSCBuilder`**: Builds binary OSC data from message objects
 - **`OSCHandlerRegistry`**: Routes messages to appropriate handlers
@@ -108,7 +109,10 @@ var velocity = msg.getFloat(1); // 0.8
 var instrument = msg.getString(2); // "piano"
 ```
 
-### OSCServer
+### Server Implementation
+
+#### Blocking Server (OSCServer)
+For simple applications where blocking is acceptable:
 
 ```haxe
 var server = new OSCServer(8000);
@@ -122,7 +126,33 @@ server.setDefaultHandler(function(msg) {
     return new OSCMessage("/error", [OSCType.String("Unknown command")]);
 });
 
-server.start(); // Blocking call
+server.start(); // Blocking call - processes messages in main thread
+```
+
+#### Non-blocking Server (OSCServerAsync)
+For responsive applications with main loops:
+
+```haxe
+var server = new OSCServerAsync("127.0.0.1", 8000);
+
+// Register handlers (same API)
+server.addHandler("/play", playHandler);
+server.addHandler("/stop", stopHandler);
+
+server.start(); // Starts background network and processing threads
+
+// In your main application loop:
+while (running) {
+    server.processPendingMessages(); // Process queued messages
+    
+    // Your application logic here
+    updateGraphics();
+    handleInput();
+    
+    Sys.sleep(0.016); // ~60 FPS
+}
+
+server.stop(); // Clean shutdown
 ```
 
 ## Built-in Handlers
