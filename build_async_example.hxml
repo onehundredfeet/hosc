@@ -1,0 +1,5 @@
+# Async OSC Server Example Build Configuration
+-cp src
+-main AsyncServerExample
+-hl bin/async_server.hl
+--debug
