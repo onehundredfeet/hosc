@@ -85,8 +85,6 @@ class OSCServerAsync {
         this.isNetworkRunning = false;
         this.isProcessingRunning = false;
         
-        // Set up default handlers
-        setupDefaultHandlers();
     }
     
     /**
@@ -362,7 +360,7 @@ class OSCServerAsync {
     /**
      * Set up default message handlers
      */
-    private function setupDefaultHandlers():Void {
+    public function setupDefaultHandlers():Void {
         // Ping handler
         registerHandler("/ping", function(msg:OSCMessage):OSCMessage {
             trace("Received ping, sending pong (async)");
@@ -390,26 +388,6 @@ class OSCServerAsync {
                 OSCType.Int(stats.outgoing),
                 OSCType.Int(stats.maxSize)
             ]);
-        });
-        
-        // Test arithmetic handler
-        registerHandler("/math/add", function(msg:OSCMessage):OSCMessage {
-            if (msg.args.length >= 2) {
-                var a = switch(msg.args[0]) {
-                    case Int(v): v;
-                    case Float(v): Std.int(v);
-                    default: 0;
-                };
-                var b = switch(msg.args[1]) {
-                    case Int(v): v;
-                    case Float(v): Std.int(v);
-                    default: 0;
-                };
-                var result = a + b;
-                trace('Math (async): $a + $b = $result');
-                return new OSCMessage("/math/add/result", [OSCType.Int(result)]);
-            }
-            return new OSCMessage("/math/add/error", [OSCType.String("Need 2 numeric arguments")]);
         });
         
         // Set default handler for unknown messages

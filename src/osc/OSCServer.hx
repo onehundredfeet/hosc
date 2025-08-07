@@ -24,8 +24,11 @@ class OSCServer {
         this.isRunning = false;
         this.handlerRegistry = new OSCHandlerRegistry();
         
-        // Set up default handlers
-        setupDefaultHandlers();
+         // Set default handler for unknown messages
+        setDefaultHandler(function(msg:OSCMessage):OSCMessage {
+            trace('Unknown message address: ${msg.address}');
+            return new OSCMessage("/error", [OSCType.String('Unknown address: ${msg.address}')]);
+        });
     }
     
     /**
@@ -123,7 +126,7 @@ class OSCServer {
     /**
      * Set up some default message handlers
      */
-    private function setupDefaultHandlers():Void {
+    public function setupDefaultHandlers():Void {
         // Ping handler
         registerHandler("/ping", function(msg:OSCMessage):OSCMessage {
             trace("Received ping, sending pong");
@@ -142,30 +145,6 @@ class OSCServer {
             return new OSCMessage("/info/response", [OSCType.String(info)]);
         });
         
-        // Test arithmetic handler
-        registerHandler("/math/add", function(msg:OSCMessage):OSCMessage {
-            if (msg.args.length >= 2) {
-                var a = switch(msg.args[0]) {
-                    case Int(v): v;
-                    case Float(v): Std.int(v);
-                    default: 0;
-                };
-                var b = switch(msg.args[1]) {
-                    case Int(v): v;
-                    case Float(v): Std.int(v);
-                    default: 0;
-                };
-                var result = a + b;
-                trace('Math: $a + $b = $result');
-                return new OSCMessage("/math/add/result", [OSCType.Int(result)]);
-            }
-            return new OSCMessage("/math/add/error", [OSCType.String("Need 2 numeric arguments")]);
-        });
-        
-        // Set default handler for unknown messages
-        setDefaultHandler(function(msg:OSCMessage):OSCMessage {
-            trace('Unknown message address: ${msg.address}');
-            return new OSCMessage("/error", [OSCType.String('Unknown address: ${msg.address}')]);
-        });
+       
     }
 }

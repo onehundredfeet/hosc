@@ -1,0 +1,5 @@
+# Haxe OSC Library - Library Test Build
+-cp src
+-main LibraryTest
+-cpp bin/cpp_test
+-lib hxcpp

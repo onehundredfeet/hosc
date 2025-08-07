@@ -25,6 +25,7 @@ Thumbs.db
 *.temp
 *.log
 *.cache
+.haxelib
 
 # OS generated files
 .DS_Store

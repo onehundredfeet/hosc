@@ -1,0 +1,12 @@
+{
+  "name": "haxe-osc",
+  "url": "https://github.com/rcleven/haxe-osc",
+  "license": "MIT",
+  "tags": ["networking", "osc", "udp", "audio", "realtime"],
+  "description": "A comprehensive Open Sound Control (OSC) library for Haxe with both blocking and non-blocking server implementations",
+  "version": "1.0.0",
+  "classPath": "src/",
+  "releasenote": "Initial release with OSCServer (blocking) and OSCServerAsync (non-blocking) implementations. Supports OSC 1.0 specification with Int32, Float32, String, and Blob types.",
+  "contributors": ["rcleven"],
+  "dependencies": {}
+}
